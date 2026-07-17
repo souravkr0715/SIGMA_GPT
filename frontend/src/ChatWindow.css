@@ -1,5 +1,5 @@
 .chatWindow{
-    background-color: #212121;
+    background-color: #000000;
     height: 100vh;
     width: 100%;
     display: flex;
@@ -22,22 +22,123 @@ text-align: center;
 
 }
 
-.userIconDiv{
+.userIconDiv {
     margin: 1rem 2rem;
-
+    position: relative;
 }
 
-.userIcon{
+.userIcon {
     background-color: #339cff;
-    height: 25px;
-    width: 25px;
+    height: 32px;
+    width: 32px;
     border-radius: 50%;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     cursor: pointer;
 }
 
+
+/* COMPACT DROPDOWN */
+
+.profileDropdown {
+    position: absolute;
+
+    /* directly below profile */
+    top: calc(100% + 8px);
+    right: 0;
+
+    width: 170px;
+
+    background-color: #202020;
+    border: 1px solid #333;
+    border-radius: 10px;
+
+    padding: 5px;
+
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.5);
+
+    z-index: 1000;
+}
+
+
+/* DROPDOWN ITEMS */
+
+.profileDropdown .profileMenuItem {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    padding: 9px 10px;
+    margin: 0;
+
+    border-radius: 6px;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+.profileDropdown .profileMenuItem:hover {
+    background-color: #303030;
+}
+
+
+/* ICON */
+
+.profileDropdown .profileMenuItem i {
+    width: 18px;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    color: #aaa;
+}
+
+
+/* TEXT */
+
+.profileDropdown .profileMenuItem span {
+    margin: 0;
+    padding: 0;
+
+    font-size: 13px;
+
+    color: #d1d5db;
+}
+
+
+/* DIVIDER */
+
+.profileMenuDivider {
+    height: 1px;
+
+    background-color: #383838;
+
+    margin: 4px 5px;
+}
+
+
+/* LOGOUT */
+
+.profileDropdown .logout:hover {
+    background-color: rgba(248, 113, 113, 0.1);
+}
+
+.profileDropdown .logout:hover i,
+.profileDropdown .logout:hover span {
+    color: #f87171;
+}
 /* chat input */
 
 .chatInput{

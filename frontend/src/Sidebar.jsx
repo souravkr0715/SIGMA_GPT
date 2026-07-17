@@ -4,7 +4,6 @@ import { useContext } from "react";
 import MyContext from "./MyContext";
 import { v1 as uuidv1 } from "uuid";
 
-
 export default function Sidebar() {
   const {
     allThreads,
@@ -34,7 +33,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     getAllThreads();
-  });
+  }, [currThreadId]);
 
   const createNewChat = () => {
     setNewChat(true);
@@ -44,40 +43,69 @@ export default function Sidebar() {
     setPrevChats([]);
   };
 
+  // const changeThread = async (newThreadId) => {
+  //   setCurrThreadId(newThreadId);
+
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:8080/api/thread/${newThreadId}`,
+  //     );
+  //     const res = await response.json();
+  //     console.log(res);
+  //     setPrevChats(res);
+  //     setNewChat(false);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   const changeThread = async (newThreadId) => {
     setCurrThreadId(newThreadId);
+
+    // Clear previous latest reply
+    setReply(null);
 
     try {
       const response = await fetch(
         `http://localhost:8080/api/thread/${newThreadId}`,
       );
+
       const res = await response.json();
+
+      if (!response.ok) {
+        throw new Error("Failed to load thread");
+      }
+
       console.log(res);
+
       setPrevChats(res);
+
       setNewChat(false);
     } catch (err) {
-      console.log(err);
+      console.error("Error loading thread:", err);
     }
   };
 
-
-  const deleteThread = async(threadId)=>{
-    try{
-     const response = await fetch(
-        `http://localhost:8080/api/thread/${threadId}`,{method:"DELETE"},
+  const deleteThread = async (threadId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/thread/${threadId}`,
+        { method: "DELETE" },
       );
       const res = await response.json();
       console.log(res);
 
-      setAllThreads(prev => prev.filter(thread=>thread.threadId !== threadId));
+      setAllThreads((prev) =>
+        prev.filter((thread) => thread.threadId !== threadId),
+      );
 
-      if(threadId === currThreadId){
+      if (threadId === currThreadId) {
         createNewChat();
       }
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <section className="sidebar">
@@ -92,19 +120,37 @@ export default function Sidebar() {
 
       {/* {history} */}
       <ul className="history">
-        {allThreads?.map((thread, idx) => (
-          <li key={idx} onClick={(e) => changeThread(thread.threadId)}>
-            {thread.title}
-            <i className="fa-solid fa-trash" onClick={(e)=>{
-              e.stopPropagation();
-              deleteThread(thread.threadId);
-            }}></i>
-          </li>
-        ))}
+     {allThreads?.map((thread) => (
+
+  <li
+    key={thread.threadId}
+    onClick={() =>
+      changeThread(thread.threadId)
+    }
+  >
+
+    {thread.title}
+
+    <i
+      className="fa-solid fa-trash"
+      onClick={(e) => {
+
+        e.stopPropagation();
+
+        deleteThread(
+          thread.threadId
+        );
+
+      }}
+    ></i>
+
+  </li>
+
+))}
       </ul>
       {/* {sign} */}
       <div className="sign">
-        <p>By ApnaCollege &hearts;</p>
+        <p>By Team - The Ascenders &hearts;</p>
       </div>
     </section>
   );

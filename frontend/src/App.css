@@ -1,7 +1,7 @@
 
 *{
-  color: #eceece;
-  font-family: Roboto,'Open Sans','Helvetica Neve',sans-serif;
+  color: #d1d5db;
+  font-family: Roboto,'Open Sans','Helvetica Neue',sans-serif;
 }
 
 body{
@@ -9,7 +9,7 @@ body{
   padding: 0;
 }
 
-.app{
-  background-color: #212121;
+.app {
+  background-color: #000000;
   display: flex;
 }
